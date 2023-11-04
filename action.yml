@@ -1,5 +1,7 @@
 name: Deploy to AWS S3
 description: Deploy a static website to AWS S3
+icon: arrow-up
+color: green
 inputs:
   aws-access-key-id:
     description: AWS Access Key ID for authentication
