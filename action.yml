@@ -20,10 +20,9 @@ runs:
   using: "composite"
   steps:
     - name: Sync S3
-      run: aws s3 sync "${{ inputs.src-folder }}" s3://${bucketName} --region ${bucketRegion}
+      run: aws s3 sync ${{ inputs.src-folder }} s3://${{ inputs.bucket-name}} --region ${{ inputs.bucket-region }}
       shell: bash
     # - name: Output URL
     #   id: output-url
     #   run: echo 'website-url="${{ http://${{ inputs.bucket-name }}.s3-website-${{ inputs.bucket-region}}.amazonaws.com/ }}"' >> $GITHUB_OUTPUT ';'
     #   shell: bash
-
