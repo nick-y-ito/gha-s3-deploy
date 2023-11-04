@@ -15,6 +15,14 @@ inputs:
 outputs:
   website-url:
     description: The URL of your website hosted on S3
+    value: ${{ steps.output-url.outputs.website-url }}
 runs:
-  using: 'node20'
-  main: 'main.js'
+  using: "composite"
+  steps:
+    - name: Sync S3
+      run: aws s3 sync "${{ inputs.src-folder }}" s3://${bucketName} --region ${bucketRegion}
+      shell: bash
+    - name: Output URL
+      id: output-url
+      run: echo 'website-url="${{ http://${{ inputs.bucket-name }}.s3-website-${{ inputs.bucket-region}}.amazonaws.com/ }}"' >> $GITHUB_OUTPUT ';'
+      shell: bash
