@@ -10,14 +10,14 @@ inputs:
     description: AWS Secret Access Key for authentication
     required: true
   bucket-name:
-    description: The S3 bucket name your website is going to be hosted to.
+    description: The name of the S3 bucket where your website will be hosted
     required: true
   bucket-region:
-    description: The region of the S3 bucket.
+    description: The region of the S3 bucket
     required: false
     default: us-east-1
   src-folder:
-    description: Absolute path of the folder containing the deployable files.
+    description: Absolute path of the folder containing the deployable files
     required: false
     default: .
 outputs:
@@ -34,9 +34,8 @@ runs:
         aws configure set aws_secret_access_key ${{ inputs.aws-secret-access-key }}
     - name: Sync S3
       shell: bash
-      run: aws s3 sync ${{ inputs.src-folder }} s3://${{ inputs.bucket-name}} --region ${{ inputs.bucket-region }}
+      run: aws s3 sync ${{ inputs.src-folder }} s3://${{ inputs.bucket-name }} --region ${{ inputs.bucket-region }}
     - name: Output URL
       id: output-url
       shell: bash
-      run: echo 'website-url="http://${{ inputs.bucket-name }}.s3-website-${{ inputs.bucket-region}}.amazonaws.com/"' >> $GITHUB_OUTPUT ';'
-
+      run: echo 'website-url="http://${{ inputs.bucket-name }}.s3-website-${{ inputs.bucket-region }}.amazonaws.com/"' >> $GITHUB_OUTPUT ';'
