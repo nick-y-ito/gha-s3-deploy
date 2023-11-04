@@ -18,10 +18,10 @@ inputs:
     description: Absolute path of the folder containing the deployable files.
     required: false
     default: .
-# outputs:
-#   website-url:
-#     description: The URL of your website hosted on S3
-#     value: ${{ steps.output-url.outputs.website-url }}
+outputs:
+  website-url:
+    description: The URL of your website hosted on S3
+    value: ${{ steps.output-url.outputs.website-url }}
 runs:
   using: "composite"
   steps:
@@ -33,7 +33,7 @@ runs:
     - name: Sync S3
       shell: bash
       run: aws s3 sync ${{ inputs.src-folder }} s3://${{ inputs.bucket-name}} --region ${{ inputs.bucket-region }}
-    # - name: Output URL
-    #   id: output-url
-    #   run: echo 'website-url="${{ http://${{ inputs.bucket-name }}.s3-website-${{ inputs.bucket-region}}.amazonaws.com/ }}"' >> $GITHUB_OUTPUT ';'
-    #   shell: bash
+    - name: Output URL
+      id: output-url
+      shell: bash
+      run: echo 'website-url="http://${{ inputs.bucket-name }}.s3-website-${{ inputs.bucket-region}}.amazonaws.com/"' >> $GITHUB_OUTPUT ';'
