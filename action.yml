@@ -1,22 +1,17 @@
 name: Deploy to AWS S3
 description: Deploy a static website to AWS S3
-icon: arrow-up
-color: green
 inputs:
-  aws-access-key-id:
-    description: AWS Access Key ID for authentication
+  role-to-assume: 
+    description: aaa
     required: true
-  aws-secret-access-key:
-    description: AWS Secret Access Key for authentication
-    required: true
-  bucket-name:
+  bucket:
     description: The name of the S3 bucket where your website will be hosted
     required: true
-  bucket-region:
+  region:
     description: The region of the S3 bucket
     required: false
     default: us-east-1
-  src-folder:
+  folder:
     description: Absolute path of the folder containing the deployable files
     required: false
     default: .
@@ -28,14 +23,14 @@ runs:
   using: "composite"
   steps:
     - name: Configure AWS Credentials
-      shell: bash
-      run: |
-        aws configure set aws_access_key_id ${{ inputs.aws-access-key-id }}
-        aws configure set aws_secret_access_key ${{ inputs.aws-secret-access-key }}
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        role-to-assume: ${{ inputs.role-to-assume }}
+        aws-region: ${{ inputs.region }}
     - name: Sync S3
       shell: bash
-      run: aws s3 sync ${{ inputs.src-folder }} s3://${{ inputs.bucket-name }} --region ${{ inputs.bucket-region }}
+      run: aws s3 sync ${{ inputs.folder }} s3://${{ inputs.bucket }} --region ${{ inputs.region }}
     - name: Output URL
       id: output-url
       shell: bash
-      run: echo 'website-url="http://${{ inputs.bucket-name }}.s3-website-${{ inputs.bucket-region }}.amazonaws.com/"' >> $GITHUB_OUTPUT ';'
+      run: echo 'website-url="http://${{ inputs.bucket }}.s3-website-${{ inputs.region }}.amazonaws.com/"' >> $GITHUB_OUTPUT ';'
