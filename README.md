@@ -12,6 +12,7 @@ Deploy a static website to AWS S3.
   - [Creating An Identity Provider](#creating-an-identity-provider)
     - [Create an identity provider in the AWS IAM console](#create-an-identity-provider-in-the-aws-iam-console)
     - [Assign a role to the identity provider](#assign-a-role-to-the-identity-provider)
+  - [Dependencies](#dependencies)
   - [License](#license)
 
 ## Prerequisites
@@ -105,6 +106,9 @@ jobs:
 6. Make sure the GitHub identity provider is added to the role's trusted relationships
 
 For more information, see [GitHub's documentation](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services)
+
+## Dependencies
+- [AWS Configure Credentials Action](https://github.com/aws-actions/configure-aws-credentials) is used to configure AWS credentials with the provided IAM role.
 
 ## License
 The code in this project is released under the MIT License.
