@@ -41,13 +41,12 @@ See: [GitHub Documents: Adding permissions settings](https://docs.github.com/en/
 ## Inputs
 S3 Deploy's Action supports inputs from the user listed in the table below:
 
-Input	Type	Required	Default	Description
-| Input                 | Required | Default   | Description                                                 |
-| --------------------- | -------- | --------- | ----------------------------------------------------------- |
-| role-to-assume        | Yes      |           | The ARN of the AWS IAM role to assume for deploying to S3   |
-| bucket-name           | Yes      |           | The S3 bucket where your website will be hosted             |
-| bucket-region         | No       | us-east-1 | The region of the S3 bucket                                 |
-| src-folder            | No       | .         | Absolute path of the folder containing the deployable files |
+| Input          | Required | Default   | Description                                                 |
+| -------------- | -------- | --------- | ----------------------------------------------------------- |
+| role-to-assume | Yes      |           | The ARN of the AWS IAM role to assume for deploying to S3   |
+| bucket         | Yes      |           | The S3 bucket where your website will be hosted             |
+| region         | No       | us-east-1 | The region of the S3 bucket                                 |
+| folder         | No       | .         | Absolute path of the folder containing the deployable files |
 
 ## Outputs
 This action provides the following outputs that can be accessed in subsequent steps of your workflow using the `steps` context.
