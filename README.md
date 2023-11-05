@@ -90,17 +90,17 @@ jobs:
 ### Create an identity provider in the AWS IAM console
 1. Navigate to the Identity Providers page in the AWS IAM console
 2. Add a provider with the following properties:
-   * Provider type: OpenID Connect
-   * Provider URL: https://token.actions.githubusercontent.com
-   * Audience: sts.amazonaws.com
+  * Provider type: OpenID Connect
+  * Provider URL: https://token.actions.githubusercontent.com
+  * Audience: sts.amazonaws.com
 ### Assign a role to the identity provider
 1. Navigate to the identity provider details page created in the previous step
 2. Hit the "Assign role" button
 3. Create a new role with the following properties:
- * Trusted entity type: Web identity
- * Identity provider: the identity provider you created in step 3
- * Audience: the audience you specified in step 3
- * GitHub organization: your GitHub username or organization name
+  * Trusted entity type: Web identity
+  * Identity provider: the identity provider you created in step 3
+  * Audience: the audience you specified in step 3
+  * GitHub organization: your GitHub username or organization name
 4. Add right permissions
 5. Name the role and create it
 6. Make sure the GitHub identity provider is added to the role's trusted relationships
