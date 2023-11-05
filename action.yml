@@ -2,7 +2,7 @@ name: Deploy to AWS S3
 description: Deploy a static website to AWS S3
 inputs:
   role-to-assume: 
-    description: aaa
+    description: The ARN of the AWS IAM role to assume for deploying to S3
     required: true
   bucket:
     description: The name of the S3 bucket where your website will be hosted

@@ -21,8 +21,16 @@ Deploy a static website to AWS S3.
 4. [Assign a role to the identity provider](#assign-a-role-to-the-identity-provider)
 
 ## Usage
-```yaml
-- uses: uskayyyyy/gha-s3-deploy@v1
+Add the following permissions to the job or workflow that uses this action.
+```yml
+permissions:
+  id-token: write
+  contents: read
+```
+See: [GitHub Documents: Adding permissions settings](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services#adding-permissions-settings)
+
+```yml
+- uses: uskayyyyy/gha-s3-deploy@v2
     with:
       role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
       bucket: ${{ secrets.AWS_BUCKET }}}
@@ -36,8 +44,7 @@ S3 Deploy's Action supports inputs from the user listed in the table below:
 Input	Type	Required	Default	Description
 | Input                 | Required | Default   | Description                                                 |
 | --------------------- | -------- | --------- | ----------------------------------------------------------- |
-| aws-access-key-id     | Yes      |           | AWS Access Key ID for authentication                        |
-| aws-secret-access-key | Yes      |           | AWS Secret Access Key for authentication                    |
+| role-to-assume        | Yes      |           | The ARN of the AWS IAM role to assume for deploying to S3   |
 | bucket-name           | Yes      |           | The S3 bucket where your website will be hosted             |
 | bucket-region         | No       | us-east-1 | The region of the S3 bucket                                 |
 | src-folder            | No       | .         | Absolute path of the folder containing the deployable files |
@@ -50,7 +57,7 @@ This action provides the following outputs that can be accessed in subsequent st
 | `website-url` | The URL of your website hosted on S3. |
 
 ## Example
-```yaml
+```yml
 # .github/workflows/example.yml
 
 name: Example workflow for S3 Deploy
@@ -58,6 +65,9 @@ on: push
 jobs:
   run:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - uses: actions/checkout@v4
       - name: Install dependencies
@@ -66,10 +76,10 @@ jobs:
         run: npm run build
       - name: Deploy
         id: deploy
-        uses: uskayyyyy/gha-s3-deploy@v1
+        uses: uskayyyyy/gha-s3-deploy@v2
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
-          bucket: ${{ secrets.AWS_BUCKET }}}
+          bucket: ${{ secrets.AWS_BUCKET }}
           region: us-west-2   # Optional - Default: us-east-1
           folder: ./dist      # Optional - Default: . (root)
       - name: Output Website URL
